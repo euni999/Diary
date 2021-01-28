@@ -1,18 +1,16 @@
 package com.example.mhschedule;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private test1 home = new test1();
+    private Alarm home = new Alarm();
     private test2 schedule = new test2();
     private test3 challenge = new test3();
 
