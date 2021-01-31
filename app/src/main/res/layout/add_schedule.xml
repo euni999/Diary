@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_schedule">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="parent"
+        tools:layout_editor_absoluteY="parent" >
+
+
+        <RadioButton
+            android:id="@+id/dailybtn"
+            android:layout_width="127dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="80dp"
+            android:text="daily"
+            android:textSize="20sp"
+            android:checked="true"
+            tools:layout_editor_absoluteY="27dp"/>
+
+        <RadioButton
+            android:id="@+id/todobtn"
+            android:layout_width="127dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:text="To do"
+            android:textSize="20sp"
+            android:checked="false"
+            tools:layout_editor_absoluteY="27dp" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:background="@drawable/back"
+        android:hint="제목"
+        tools:layout_editor_absoluteY="107dp" />
+
+    <EditText
+        android:id="@+id/stDate"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="date"
+        android:hint=" 날짜(무시!!!!)"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        tools:layout_editor_absoluteY="190dp" />
+
+    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="15dp"
+        android:ems="10"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="190dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="시작 날짜"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/startTime"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="time"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="243dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="시작 시간"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="date"
+        android:layout_marginTop="350dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="334dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="종료 날짜"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/endTime"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="time"
+        android:layout_marginTop="400dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="387dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="종료 시간"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람"
+        android:textSize="15sp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="330dp"
+        android:layout_gravity="right"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="377dp"
+        android:layout_height="55dp"
+        android:text="저장하기"
+        android:textSize="20sp"
+        android:layout_marginTop="520dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="508dp" />
+
+
+
+</FrameLayout>

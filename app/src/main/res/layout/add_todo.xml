@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_todo">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="parent"
+        tools:layout_editor_absoluteY="parent" >
+
+
+        <RadioButton
+            android:id="@+id/dailybtn"
+            android:layout_width="127dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="80dp"
+            android:text="daily"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteY="27dp"/>
+
+        <RadioButton
+            android:id="@+id/todobtn"
+            android:layout_width="127dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:text="To do"
+            android:textSize="20sp"
+            android:checked="true"
+            tools:layout_editor_absoluteY="27dp" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="제목"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="107dp" />
+
+    <TextView
+        android:id="@+id/replay"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:ems="10"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="212dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="반복"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="377dp"
+        android:layout_height="55dp"
+        android:text="저장하기"
+        android:textSize="20sp"
+        android:layout_marginTop="350dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="350dp" />
+
+</FrameLayout>
