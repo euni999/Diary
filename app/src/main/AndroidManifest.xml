@@ -16,6 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Alarm_Add">
+
+        </activity>
+        <receiver android:name=".Alarm_Receiver" />
+        <service
+            android:name=".Alarm_Service"
+            android:enabled="true"></service>
+        <activity android:name=".AlarmActivity">
+
+        </activity>
     </application>
 
 </manifest>
