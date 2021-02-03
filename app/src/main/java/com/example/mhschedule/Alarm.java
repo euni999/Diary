@@ -68,9 +68,9 @@ public class Alarm extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode,resultCode,data);
-        Log.d(TAG,Integer.toString(requestCode));
+        Log.d(TAG,Integer.toString(resultCode));
 
-        if(data != null)
+        if(data != null && resultCode == RESULT_OK)
         {
             int hour,minute;
             hour = data.getIntExtra("hour", 1);
