@@ -105,7 +105,14 @@ public class Alarm_Add extends AppCompatActivity {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
 
         //alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-        Log.i("STATE","알람 설정 성공!");
+        Log.i(TAG,"알람 설정 성공!");
+
+        // 결과값 전달
+        Intent sendIntent = new Intent(this, MainActivity.class);
+        sendIntent.putExtra("hour", hour);
+        sendIntent.putExtra("minute", minute);
+        setResult(RESULT_OK, sendIntent);
+        finish();
     }
 
     public void cancelAlarm(View view)
