@@ -11,13 +11,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private Alarm home = new Alarm();
-    private add_schedule schedule = new add_schedule();
+    private add_todo schedule = new add_todo();
     private test3 challenge = new test3();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // 초기 값을 Home 화면으로 해줌
         replaceFragment(home);
@@ -49,4 +50,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
     }
+
+
 }
