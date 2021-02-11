@@ -9,27 +9,22 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Alarm_Adapter extends BaseAdapter {
     static final String TAG = "Alarm_Adapter";
 
-    public ArrayList<Time> listviewitem = new ArrayList<Time>();
-    private ArrayList<Time> arrayList = listviewitem;   //백업 arrayList
+    public ArrayList<AlarmEntity> listviewitem = new ArrayList<AlarmEntity>();
+    private ArrayList<AlarmEntity> arrayList = listviewitem;   //백업 arrayList
 
     @Override
-    public int getCount() {
-        return arrayList.size();
-    }
+    public int getCount() { return arrayList.size(); }
 
     @Override
-    public Object getItem(int position) {
-        return arrayList.get(position);
-    }
+    public Object getItem(int position) { return arrayList.get(position); }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public long getItemId(int position) { return position; }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -53,35 +48,43 @@ public class Alarm_Adapter extends BaseAdapter {
         else
             holder = (ViewHolder)convertView.getTag();
 
-        Time time = arrayList.get(position);
+        AlarmEntity time = arrayList.get(position);
         holder.hourText.setText(time.getHour()+ "시");
         holder.minuteText.setText(time.getMinute()+ "분");
 
         return convertView;
     }
 
-    private Time setTime(int hour,int minute)
+    private AlarmEntity setTime(int hour,int minute)
     {
-        Time time = new Time();
-        time.setHour(hour);
-        time.setMinute(minute);
-
+        AlarmEntity time = new AlarmEntity(hour,minute);
         return time;
     }
 
-
     public void addItem(int hour, int minute) {
-        Time time = setTime(hour,minute);
-
+        AlarmEntity time = setTime(hour,minute);
         listviewitem.add(time);
     }
 
+    // DB 값을 읽어 추가하는 add
+    public void addAll(List<AlarmEntity> entities) {
+        for(AlarmEntity entity : entities)
+        {
+            AlarmEntity time = setTime(entity.getHour(),entity.getMinute());
+            listviewitem.add(time);
+        }
+    }
+
     // 수정
-    public void modifyItem(int position,int hour,int minute)
+    public AlarmEntity modifyItem(int position,int hour,int minute)
     {
-        Time time = setTime(hour,minute);
+        AlarmEntity time = (AlarmEntity) getItem(position);
+        time.setHour(hour);
+        time.setMinute(minute);
 
         listviewitem.set(position,time);
+
+        return time;
     }
 
     //List 삭제 method
@@ -93,6 +96,11 @@ public class Alarm_Adapter extends BaseAdapter {
     public void removeItem() {
         if(listviewitem.size() >= 1)
             listviewitem.remove(listviewitem.size()-1);
+    }
+
+    public void removeItemAll()
+    {
+        listviewitem.clear();
     }
 
     static class ViewHolder {

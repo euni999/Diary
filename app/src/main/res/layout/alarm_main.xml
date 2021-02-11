@@ -18,6 +18,14 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/delete_alarm_all"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="삭제"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp" />
+        <Button
             android:id="@+id/add_alarm"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
