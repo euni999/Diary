@@ -43,15 +43,10 @@ public class Alarm_Add extends AppCompatActivity {
 
     public void setAlarm(View view)
     {
-        MaterialButtonToggleGroup buttonToggleGroup = findViewById(R.id.toggle_button_group);
         final Calendar calendar = Calendar.getInstance();
 
         // 요일 값 초기화
-        boolean[] weekends = {false,false,false,false,false,false,false};
-        Log.i(TAG,buttonToggleGroup.getCheckedButtonIds().toString());
-        int[] ButtonsIds = buttonToggleGroup.getCheckedButtonIds().stream().mapToInt(i->i).toArray();
-        for(int number : ButtonsIds)
-            weekends[number-1] = true;
+        boolean[] weekends = setWeekends();
 
         // 시간 가져오기
         int hour = timePicker.getHour();
@@ -66,24 +61,15 @@ public class Alarm_Add extends AppCompatActivity {
 
         Log.i("STATE","예약 시간 : " + calendar.getTime().toString());
 
-        // 알람 리시버 intent 생성
-        final Intent alarm_intent = new Intent(context, Alarm_Receiver.class);
-        // 액션 설정
-        alarm_intent.setAction(Alarm_Receiver.ACTION_RESTART_SERVICE);
-        // 선택한 요일 값들 넘겨줌
-        alarm_intent.putExtra("weekend",weekends);
-
-        // pendingIntent 설정
-        pendingIntent = PendingIntent.getBroadcast(Alarm_Add.this,0,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // 하루의 시간을 나타냄
-        long intervalDay = 1000 * 60 * 60  * 24;
+        setPendingIntent(weekends);
 
         long selectTime = calendar.getTimeInMillis();
         long currentTime = System.currentTimeMillis();
+        // 하루의 시간을 나타냄
+        long intervalDay = 1000 * 60 * 60  * 24;
 
         //만일 내가 설정한 시간이 현재 시간보다 작다면 알람이 바로 울려버리기 때문에 이미 시간이 지난 알람은 다음날 울려야 한다.
-        if(currentTime>selectTime)
+        if(currentTime >= selectTime)
             selectTime += intervalDay;
 
         /*
@@ -103,10 +89,37 @@ public class Alarm_Add extends AppCompatActivity {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
-
         //alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
         Log.i(TAG,"알람 설정 성공!");
+        // 알람에 대한 정보를 전달해주고 종료함
+        processEnd(hour,minute);
+    }
 
+    public void cancelAlarm(View view)
+    {
+        Intent intent = new Intent(this, Alarm.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.cancel(pendingIntent);
+    }
+
+    private boolean[] setWeekends()
+    {
+        // 요일 값 가져오기 위한 데이터
+        MaterialButtonToggleGroup buttonToggleGroup = findViewById(R.id.toggle_button_group);
+
+        // 요일 값 초기화
+        boolean[] weekends = {false,false,false,false,false,false,false};
+        Log.i(TAG,buttonToggleGroup.getCheckedButtonIds().toString());
+
+        int[] ButtonsIds = buttonToggleGroup.getCheckedButtonIds().stream().mapToInt(i->i).toArray();
+        for(int number : ButtonsIds)
+            weekends[number-1] = true;
+
+        return weekends;
+    }
+
+    private void processEnd(int hour, int minute)
+    {
         // 결과값 전달
         Intent sendIntent = new Intent(this, MainActivity.class);
         sendIntent.putExtra("hour", hour);
@@ -115,11 +128,16 @@ public class Alarm_Add extends AppCompatActivity {
         finish();
     }
 
-    public void cancelAlarm(View view)
+    private void setPendingIntent(boolean[] weekends)
     {
-        Intent intent = new Intent(this, Alarm.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        alarmManager.cancel(pendingIntent);
+        // 알람 리시버 intent 생성
+        final Intent alarm_intent = new Intent(context, Alarm_Receiver.class);
+        alarm_intent.setAction(Alarm_Receiver.ACTION_RESTART_SERVICE);
+        // 선택한 요일 값들 넘겨줌
+        alarm_intent.putExtra("weekend",weekends);
+
+        // pendingIntent 설정
+        pendingIntent = PendingIntent.getBroadcast(Alarm_Add.this,0,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

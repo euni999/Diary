@@ -55,23 +55,13 @@ public class Alarm_Adapter extends BaseAdapter {
         return convertView;
     }
 
-    private AlarmEntity setTime(int hour,int minute)
-    {
-        AlarmEntity time = new AlarmEntity(hour,minute);
-        return time;
-    }
-
-    public void addItem(int hour, int minute) {
-        AlarmEntity time = setTime(hour,minute);
-        listviewitem.add(time);
-    }
-
     // DB 값을 읽어 추가하는 add
     public void addAll(List<AlarmEntity> entities) {
         for(AlarmEntity entity : entities)
         {
-            AlarmEntity time = setTime(entity.getHour(),entity.getMinute());
+            AlarmEntity time = entity;
             listviewitem.add(time);
+            Log.i(TAG,time.toString());
         }
     }
 

@@ -127,7 +127,7 @@ public class Alarm extends Fragment {
             {
                 Log.d(TAG,"알람 목록 수정");
                 AlarmEntity entity = arrayAdapter.modifyItem(adapterPosition,hour,minute);
-                Log.i(TAG,Integer.toString(entity.getAlarmId()));
+                Log.i(TAG,entity.toString());
                 repository.update(entity);
             }
         }
