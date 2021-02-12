@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mhschedule">
 
     <application
@@ -21,16 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Alarm_Add"></activity>
+        <activity android:name=".Alarm_Add">
+
+        </activity>
 
         <receiver android:name=".Alarm_Receiver" />
-
         <service
             android:name=".Alarm_Service"
-            android:enabled="true" />
+            android:enabled="true"></service>
+        <activity android:name=".AlarmActivity">
 
-        <activity android:name=".AlarmActivity"></activity>
-
+        </activity>
     </application>
 
 </manifest>
