@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private Alarm home = new Alarm();
-    private test2 schedule = new test2();
+    private Calendar_ schedule = new Calendar_();
     private test3 challenge = new test3();
 
     @Override

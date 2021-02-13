@@ -1,9 +1,9 @@
-package com.project.sample_calendar.decorators;
+package com.example.mhschedule.decorators;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 
-import com.project.sample_calendar.R;
+import com.example.mhschedule.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;

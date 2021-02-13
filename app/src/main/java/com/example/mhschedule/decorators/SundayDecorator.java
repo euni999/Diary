@@ -1,4 +1,4 @@
-package com.project.sample_calendar.decorators;
+package com.example.mhschedule.decorators;
 
 import android.graphics.Color;
 import android.text.style.ForegroundColorSpan;
