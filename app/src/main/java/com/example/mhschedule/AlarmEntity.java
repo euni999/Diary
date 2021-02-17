@@ -12,8 +12,9 @@ public class AlarmEntity {
     private int hour,minute;
     //private int minute;
 
-    public AlarmEntity(int hour,int minute)
+    public AlarmEntity(int alarmId,int hour,int minute)
     {
+        this.alarmId = alarmId;
         this.hour = hour;
         this.minute = minute;
     }

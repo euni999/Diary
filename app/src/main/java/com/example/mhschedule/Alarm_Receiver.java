@@ -24,7 +24,12 @@ public class Alarm_Receiver extends BroadcastReceiver {
         Log.d(TAG,"리시버 동작 시작!");
         boolean[] weekends = intent.getBooleanArrayExtra("weekend");
 
+        int alarmId = intent.getIntExtra("id",1);
+
         Calendar calendar = Calendar.getInstance();
+
+        Log.i(TAG,"id : " + Integer.toString(alarmId) + " today : " + calendar.get(Calendar.DAY_OF_WEEK) + " isAlarm : " + Boolean.toString(weekends[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
+
         // 해당 요일이 알람이 안맞춰져있으면
         if(!weekends[calendar.get(Calendar.DAY_OF_WEEK) - 1])
         {

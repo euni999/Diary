@@ -25,6 +25,9 @@ import java.util.List;
 public class Alarm_Add extends AppCompatActivity {
     static final String TAG = "Alarm_Add";
 
+    public static final int REQUEST_CODE = 200;
+
+    int alarmId;
     AlarmManager alarmManager;
     TimePicker timePicker;
     Context context;
@@ -39,6 +42,11 @@ public class Alarm_Add extends AppCompatActivity {
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         timePicker = findViewById(R.id.time_picker);
+
+        String test = getIntent().getAction();
+
+        if(test == "MODIFY")
+            alarmId = getIntent().getIntExtra("id", 1);
     }
 
     public void setAlarm(View view)
@@ -98,8 +106,9 @@ public class Alarm_Add extends AppCompatActivity {
     public void cancelAlarm(View view)
     {
         Intent intent = new Intent(this, Alarm.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
+        // 해제하면 DB에서 삭제가 되어야함
     }
 
     private boolean[] setWeekends()
@@ -112,8 +121,13 @@ public class Alarm_Add extends AppCompatActivity {
         Log.i(TAG,buttonToggleGroup.getCheckedButtonIds().toString());
 
         int[] ButtonsIds = buttonToggleGroup.getCheckedButtonIds().stream().mapToInt(i->i).toArray();
+
         for(int number : ButtonsIds)
-            weekends[number-1] = true;
+        {
+            number = number % 7 != 0 ? number%7 : 7;
+            Log.d(TAG,Integer.toString(number));
+            weekends[number - 1] = true;
+        }
 
         return weekends;
     }
@@ -124,6 +138,7 @@ public class Alarm_Add extends AppCompatActivity {
         Intent sendIntent = new Intent(this, MainActivity.class);
         sendIntent.putExtra("hour", hour);
         sendIntent.putExtra("minute", minute);
+        sendIntent.putExtra("id",alarmId);
         setResult(RESULT_OK, sendIntent);
         finish();
     }
@@ -136,8 +151,12 @@ public class Alarm_Add extends AppCompatActivity {
         // 선택한 요일 값들 넘겨줌
         alarm_intent.putExtra("weekend",weekends);
 
+        // 알람 다중 등록을 위한 alarmId 설정
+        alarmId = (int)(System.currentTimeMillis()/1000);
+        alarm_intent.putExtra("id",alarmId);
+
         // pendingIntent 설정
-        pendingIntent = PendingIntent.getBroadcast(Alarm_Add.this,0,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(Alarm_Add.this,alarmId,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

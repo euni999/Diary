@@ -66,7 +66,10 @@ public class Alarm extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 adapterPosition = position;
+                AlarmEntity entity = (AlarmEntity) arrayAdapter.getItem(position);
                 Intent intent = new Intent(getActivity(), Alarm_Add.class);
+                intent.setAction("MODIFY");
+                intent.putExtra("id",entity.getAlarmId());
                 startActivityForResult(intent,REQUEST_CODE2);
             }
         });
@@ -108,16 +111,17 @@ public class Alarm extends Fragment {
 
         if(data != null && resultCode == RESULT_OK)
         {
-            int hour,minute;
+            int hour,minute,id;
             hour = data.getIntExtra("hour", 1);
             minute = data.getIntExtra("minute", 2);
+            id = data.getIntExtra("id",1);
 
             //시간 리스트 추가하는 경우
             if(requestCode == REQUEST_CODE1)
             {
                 Log.d(TAG,"알람 목록 추가");
                 // Entity 객체 생성 및 설정 한뒤 DB 에 insert 해줌
-                AlarmEntity entity = new AlarmEntity(hour,minute);
+                AlarmEntity entity = new AlarmEntity(id,hour,minute);
                 repository.insert(entity);
                 Log.i(TAG,entity.toString());
             }

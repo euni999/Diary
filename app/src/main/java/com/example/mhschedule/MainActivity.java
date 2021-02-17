@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId())
             {
                 case R.id.home :
-                    replaceFragment(home);
+                    replaceFragment(schedule);
                     return true;
                 case R.id.schedule :
-                    replaceFragment(schedule);
+                    replaceFragment(home);
                     return true;
                 case R.id.challenge :
                     replaceFragment(challenge);
