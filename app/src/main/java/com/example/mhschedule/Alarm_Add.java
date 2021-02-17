@@ -40,7 +40,7 @@ public class Alarm_Add extends AppCompatActivity {
 
         this.context = this;
 
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         timePicker = findViewById(R.id.time_picker);
 
         String test = getIntent().getAction();
@@ -105,9 +105,19 @@ public class Alarm_Add extends AppCompatActivity {
 
     public void cancelAlarm(View view)
     {
-        Intent intent = new Intent(this, Alarm.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.cancel(pendingIntent);
+        Intent intent = new Intent(getApplicationContext(), Alarm_Receiver.class);
+        // 알람 해제 해줄때도 설정해줄때 해준 Action을  똑같이 설정해줘야 해제가 된다!!!!!!!!!!!!!!!!!!!!!!!
+        intent.setAction(Alarm_Receiver.ACTION_RESTART_SERVICE);
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if(pendingIntent == null || alarmManager == null)
+            Log.e(TAG,"pendingIntent 또는 alarmManager 가 null임!");
+        else
+        {
+            Log.i(TAG, "설정된 알람이 있음!");
+            alarmManager.cancel(pendingIntent);
+        }
+        Log.i(TAG,"id : " + Integer.toString(alarmId) + " 가 해제됨!");
         // 해제하면 DB에서 삭제가 되어야함
     }
 
@@ -125,7 +135,6 @@ public class Alarm_Add extends AppCompatActivity {
         for(int number : ButtonsIds)
         {
             number = number % 7 != 0 ? number%7 : 7;
-            Log.d(TAG,Integer.toString(number));
             weekends[number - 1] = true;
         }
 
@@ -146,7 +155,7 @@ public class Alarm_Add extends AppCompatActivity {
     private void setPendingIntent(boolean[] weekends)
     {
         // 알람 리시버 intent 생성
-        final Intent alarm_intent = new Intent(context, Alarm_Receiver.class);
+        final Intent alarm_intent = new Intent(getApplicationContext(), Alarm_Receiver.class);
         alarm_intent.setAction(Alarm_Receiver.ACTION_RESTART_SERVICE);
         // 선택한 요일 값들 넘겨줌
         alarm_intent.putExtra("weekend",weekends);
@@ -156,7 +165,7 @@ public class Alarm_Add extends AppCompatActivity {
         alarm_intent.putExtra("id",alarmId);
 
         // pendingIntent 설정
-        pendingIntent = PendingIntent.getBroadcast(Alarm_Add.this,alarmId,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),alarmId,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

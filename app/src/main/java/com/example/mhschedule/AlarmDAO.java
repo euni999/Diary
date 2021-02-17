@@ -29,5 +29,4 @@ public interface AlarmDAO {
 
     @Query("DELETE FROM alarms")
     void deleteAll();
-
 }
