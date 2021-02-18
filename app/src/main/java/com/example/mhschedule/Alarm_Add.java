@@ -25,13 +25,14 @@ import java.util.List;
 public class Alarm_Add extends AppCompatActivity {
     static final String TAG = "Alarm_Add";
 
-    public static final int REQUEST_CODE = 200;
-
-    int alarmId;
     AlarmManager alarmManager;
     TimePicker timePicker;
     Context context;
     PendingIntent pendingIntent;
+    MaterialButtonToggleGroup buttonToggleGroup;
+
+    int alarmId;
+    String action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,22 @@ public class Alarm_Add extends AppCompatActivity {
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         timePicker = findViewById(R.id.time_picker);
+        buttonToggleGroup = findViewById(R.id.toggle_button_group);
 
-        String test = getIntent().getAction();
+        action = getIntent().getAction();
 
-        if(test == "MODIFY")
+        // 수정으로 들어온 경우
+        if(action == "MODIFY")
+        {
             alarmId = getIntent().getIntExtra("id", 1);
+            boolean[] weekends = getIntent().getBooleanArrayExtra("weekends");
+
+            for(int i = 0; i<weekends.length; i++)
+            {
+                if(weekends[i])
+                    buttonToggleGroup.check(WeekendsManager.getWeekDayId(i));
+            }
+        }
     }
 
     public void setAlarm(View view)
@@ -54,7 +66,8 @@ public class Alarm_Add extends AppCompatActivity {
         final Calendar calendar = Calendar.getInstance();
 
         // 요일 값 초기화
-        boolean[] weekends = setWeekends();
+        boolean[] weekends = WeekendsManager.getWeekends(buttonToggleGroup.getCheckedButtonIds());
+        Log.i(TAG,buttonToggleGroup.getCheckedButtonIds().toString());
 
         // 시간 가져오기
         int hour = timePicker.getHour();
@@ -79,17 +92,13 @@ public class Alarm_Add extends AppCompatActivity {
         //만일 내가 설정한 시간이 현재 시간보다 작다면 알람이 바로 울려버리기 때문에 이미 시간이 지난 알람은 다음날 울려야 한다.
         if(currentTime >= selectTime)
             selectTime += intervalDay;
-
         /*
         sdk 23 이상부터는 Doze 모드가 있어 디바이스가 잠들면 알람매니저가 안먹힘
-
         https://developer.android.com/training/monitoring-device-state/doze-standby
         참조
         */
-
         // 알람설정
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,selectTime,intervalDay,pendingIntent);
-
         /*
         // 한번만 실행됨
         // set 함수보다 setExact 함수가 더 정확하게 스케쥴링 됨
@@ -100,7 +109,7 @@ public class Alarm_Add extends AppCompatActivity {
         //alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
         Log.i(TAG,"알람 설정 성공!");
         // 알람에 대한 정보를 전달해주고 종료함
-        processEnd(hour,minute);
+        processEnd(hour,minute,weekends);
     }
 
     public void cancelAlarm(View view)
@@ -113,41 +122,19 @@ public class Alarm_Add extends AppCompatActivity {
         if(pendingIntent == null || alarmManager == null)
             Log.e(TAG,"pendingIntent 또는 alarmManager 가 null임!");
         else
-        {
-            Log.i(TAG, "설정된 알람이 있음!");
             alarmManager.cancel(pendingIntent);
-        }
+
         Log.i(TAG,"id : " + Integer.toString(alarmId) + " 가 해제됨!");
+
         // 해제하면 DB에서 삭제가 되어야함
     }
 
-    private boolean[] setWeekends()
+    // DB에 저장할 값을 전달해줌
+    private void processEnd(int hour, int minute,boolean[] weekends)
     {
-        // 요일 값 가져오기 위한 데이터
-        MaterialButtonToggleGroup buttonToggleGroup = findViewById(R.id.toggle_button_group);
-
-        // 요일 값 초기화
-        boolean[] weekends = {false,false,false,false,false,false,false};
-        Log.i(TAG,buttonToggleGroup.getCheckedButtonIds().toString());
-
-        int[] ButtonsIds = buttonToggleGroup.getCheckedButtonIds().stream().mapToInt(i->i).toArray();
-
-        for(int number : ButtonsIds)
-        {
-            number = number % 7 != 0 ? number%7 : 7;
-            weekends[number - 1] = true;
-        }
-
-        return weekends;
-    }
-
-    private void processEnd(int hour, int minute)
-    {
-        // 결과값 전달
         Intent sendIntent = new Intent(this, MainActivity.class);
-        sendIntent.putExtra("hour", hour);
-        sendIntent.putExtra("minute", minute);
-        sendIntent.putExtra("id",alarmId);
+        AlarmEntity entity = new AlarmEntity(alarmId,hour,minute,weekends);
+        sendIntent.putExtra("entity",entity);
         setResult(RESULT_OK, sendIntent);
         finish();
     }
@@ -161,11 +148,11 @@ public class Alarm_Add extends AppCompatActivity {
         alarm_intent.putExtra("weekend",weekends);
 
         // 알람 다중 등록을 위한 alarmId 설정
-        alarmId = (int)(System.currentTimeMillis()/1000);
+        if(action != "MODIFY")
+            alarmId = (int)(System.currentTimeMillis()/1000);
         alarm_intent.putExtra("id",alarmId);
 
         // pendingIntent 설정
         pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),alarmId,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
     }
-
 }

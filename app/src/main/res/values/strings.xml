@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MHSchedule</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Alarm</string>
     <string name="menu_schedule">Schedule</string>
     <string name="menu_challenge">Challenge</string>
 

@@ -36,36 +36,43 @@
 
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/sun"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="일"/>
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/mon"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="월"/>
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/tue"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="화"/>
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/wed"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="수"/>
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/thu"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="목"/>
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/fri"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="금"/>
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/sat"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="토"/>
