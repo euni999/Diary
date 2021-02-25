@@ -65,7 +65,7 @@
         android:ems="10"
         android:textSize="20sp"
         android:gravity="right"
-        android:fontFamily="@font/susu"
+        android:fontFamily="@font/poorstory"
         android:includeFontPadding="true"
         android:paddingTop="15dp"
         android:background="@drawable/back"
@@ -167,7 +167,7 @@
         android:textSize="20sp" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switch_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="알람"
@@ -178,7 +178,7 @@
         android:layout_gravity="right"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/dailysave"
         android:layout_width="377dp"
         android:layout_height="55dp"
         android:text="저장하기"

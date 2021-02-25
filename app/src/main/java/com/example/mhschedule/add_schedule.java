@@ -3,64 +3,45 @@ package com.example.mhschedule;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link add_schedule#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class add_schedule extends Fragment {
+    static final String TAG = "add_schedule";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     public add_schedule() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment add_schedule.
-     */
     // TODO: Rename and change types and number of parameters
     public static add_schedule newInstance(String param1, String param2) {
         add_schedule fragment = new add_schedule();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
+
 
     Calendar myCalendar = Calendar.getInstance();
 
@@ -104,10 +85,6 @@ public class add_schedule extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             //super.onCreateView(savedInstanceState);
             View view = inflater.inflate(R.layout.add_schedule, container, false);
-            if (getArguments() != null) {
-                mParam1 = getArguments().getString(ARG_PARAM1);
-                mParam2 = getArguments().getString(ARG_PARAM2);
-            }
 
             // To-do-List로 변환
             add_todo todo = new add_todo();
@@ -120,6 +97,8 @@ public class add_schedule extends Fragment {
                     fragmentTransaction.commit();
                 }
             });
+
+            TextView title = (TextView) view.findViewById(R.id.content);
 
             // 날짜 변환
             TextView startdate = (TextView) view.findViewById(R.id.startDate);
@@ -176,7 +155,7 @@ public class add_schedule extends Fragment {
                     mTimePicker.show();
                 }
             });
-            endtime.setOnClickListener(new View.OnClickListener() {    // 종료 시간
+        endtime.setOnClickListener(new View.OnClickListener() {    // 종료 시간
                 @Override
                 public void onClick(View view) {
                     Calendar mcurrentTime = Calendar.getInstance();
@@ -197,7 +176,7 @@ public class add_schedule extends Fragment {
                                 mcurrentTime.set(Calendar.MINUTE, minute);
                             }
                             // EditText에 출력할 형식 지정
-                            endtime.setText(state + " " +hourOfDay + " :" + minute);
+                            endtime.setText(hourOfDay + " :" + minute + " " + state);
                         }
                     }, hour, minute, false); // true의 경우 24시간 형식의 TimePicker 출현 // mTimePicker.setTitle("Choose hour:");
                     mTimePicker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -257,7 +236,53 @@ public class add_schedule extends Fragment {
             });
 
 
+            AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+        ScheduleRespository repository = new ScheduleRespository(getContext());
+
+
+        // 알람 스위치 (오류 수정중!!!)
+        final boolean[] alarm = {false};
+        Switch alarm_switch = (Switch) view.findViewById(R.id.switch_btn);
+        final String[] a = new String[1];
+        alarm_switch.setChecked(alarm[0]);
+        alarm_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    alarm_switch.setChecked(true);
+                    alarm[0] = isChecked;
+                }
+                else {
+                    alarm_switch.setChecked(false);
+                    alarm[0] =false;
+                }
+                a[0] = String.valueOf(alarm[0]);
+            }
+
+        });
+
+         Button savebtn = (Button) view.findViewById(R.id.dailysave);
+         savebtn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 if(title.getText().toString().trim().length() <= 0) {
+                     Toast.makeText(getActivity(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                 }
+                 else {
+                     ScheduleEntity entity = new ScheduleEntity( title.getText().toString(), (String) startdate.getText(), starttime.getText().toString(), enddate.getText().toString(), endtime.getText().toString());
+                     repository.insert(entity);
+                     Log.i(TAG, entity.toString());
+                 }
+             }
+         });
+
+
             return view;
         }
 
 }
+
+
+
+
+

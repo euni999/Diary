@@ -1,5 +1,6 @@
 package com.example.mhschedule;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -30,18 +31,22 @@ public class week extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Button save = this.findViewById(R.id.backbtn);
+
     }
 
     // 반복 요일 선택
+
     public void backtodo(View view) {
         MaterialButtonToggleGroup buttonToggleGroup = findViewById(R.id.toggle_button_group);
 
+
         boolean[] weekends = {false,false,false,false,false,false,false};
-        String[] week = {"일", "월", "화", "수", "목", "금", "토"};
+        String[] week = {"일","월", "화", "수", "목", "금", "토"};
         //Log.i(TAG,buttonToggleGroup.getCheckedButtonIds().toString());
         int[] ButtonsIds = buttonToggleGroup.getCheckedButtonIds().stream().mapToInt(i->i).toArray();
         for(int number : ButtonsIds)
-            weekends[number-1] = true;
+            weekends[(number = number % 7 != 0 ? number%7 : 7)-1] = true;
 
         String result = new String();
         for(int i=0; i<7; i++) {
@@ -69,11 +74,13 @@ public class week extends AppCompatActivity {
             result = "주중";
         }
 
+
         // 요일 값 보내기
         Intent sendIntent = new Intent(this, MainActivity.class);
         sendIntent.putExtra("send",result);
         setResult(RESULT_OK, sendIntent);
         finish();
+
     }
 
 }

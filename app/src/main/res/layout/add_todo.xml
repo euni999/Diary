@@ -41,7 +41,7 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/content"
+        android:id="@+id/todocontent"
         android:layout_width="375dp"
         android:layout_height="55dp"
         android:ems="10"
@@ -82,17 +82,51 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/todosave"
         android:layout_width="377dp"
         android:layout_height="55dp"
         android:text="저장하기"
         android:fontFamily="@font/susu"
         android:textSize="20sp"
         android:backgroundTint="@color/right_purple"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="370dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="350dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btn_red"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:button="@drawable/btn_red"
+            android:background="@drawable/btn_red_click"
+            android:layout_margin="16dp"/>
+        <RadioButton
+            android:id="@+id/btn_yellow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:button="@drawable/btn_yellow"
+            android:background="@drawable/btn_yellow_click"
+            android:layout_margin="16dp"/>
+        <RadioButton
+            android:id="@+id/btn_sky"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:button="@drawable/btn_sky"
+            android:background="@drawable/btn_sky_click"
+            android:layout_margin="16dp"/>
+
+    </RadioGroup>
+
+
+
 
 </FrameLayout>

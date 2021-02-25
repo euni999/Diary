@@ -1,12 +1,15 @@
 package com.example.mhschedule;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +17,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class challenge extends Fragment {
+
+    private static final String TAG = "challenge";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +64,24 @@ public class challenge extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.challenge, container, false);
+        View view = inflater.inflate(R.layout.challenge, container, false);
+
+        /*
+        AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+        TodoRespository repository = new TodoRespository(getContext());
+        Button del = (Button) view.findViewById(R.id.tododel);
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                repository.delete();
+                //Log.i(TAG, entity.toString());
+            }
+        });
+
+         */
+
+
+
+        return view;
     }
 }
