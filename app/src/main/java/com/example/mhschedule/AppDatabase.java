@@ -37,7 +37,6 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             // 데이터베이스의 이름은 MH-db 이다
             INSTANCE = Room.databaseBuilder(context, AppDatabase.class, "MH-db").allowMainThreadQueries().build();
-
         }
 
         return INSTANCE;

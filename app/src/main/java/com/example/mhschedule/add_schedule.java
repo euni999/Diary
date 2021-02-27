@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -32,18 +33,15 @@ import java.util.Locale;
 public class add_schedule extends Fragment {
     static final String TAG = "add_schedule";
 
-    public add_schedule() {
-        // Required empty public constructor
-    }
-
     // TODO: Rename and change types and number of parameters
     public static add_schedule newInstance(String param1, String param2) {
         add_schedule fragment = new add_schedule();
         return fragment;
     }
 
-
     Calendar myCalendar = Calendar.getInstance();
+    String color = "transparency";  // 일정 색
+    boolean alarm = false;  // 알람 여부
 
     DatePickerDialog.OnDateSetListener startDatePicker = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -80,25 +78,46 @@ public class add_schedule extends Fragment {
         enddate.setText(sdf.format(myCalendar.getTime()));
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            //super.onCreateView(savedInstanceState);
             View view = inflater.inflate(R.layout.add_schedule, container, false);
 
             // To-do-List로 변환
             add_todo todo = new add_todo();
             RadioButton btn = view.findViewById(R.id.todobtn);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frameLayout,todo);
                     fragmentTransaction.commit();
                 }
             });
 
+            // 제목
             TextView title = (TextView) view.findViewById(R.id.content);
+
+            // 일정 색상 고르기
+            RadioGroup color_btn = view.findViewById(R.id.btn_color);
+            color_btn.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+                    switch (checkId) {
+                        case R.id.btn_red:
+                            color = "red";
+                            break;
+                        case R.id.btn_yellow:
+                            color = "yellow";
+                            break;
+                        case R.id.btn_sky:
+                            color = "sky";
+                            break;
+                    }
+                }
+            });
+
 
             // 날짜 변환
             TextView startdate = (TextView) view.findViewById(R.id.startDate);
@@ -126,7 +145,7 @@ public class add_schedule extends Fragment {
             TextView starttime = (TextView) view.findViewById(R.id.startTime);
             TextView endtime = (TextView) view.findViewById(R.id.endTime);
 
-        starttime.setOnClickListener(new View.OnClickListener() {   // 시작 시간
+            starttime.setOnClickListener(new View.OnClickListener() {   // 시작 시간
             @Override
             public void onClick(View v) {
                 Calendar mcurrentTime = Calendar.getInstance();
@@ -155,7 +174,7 @@ public class add_schedule extends Fragment {
                     mTimePicker.show();
                 }
             });
-        endtime.setOnClickListener(new View.OnClickListener() {    // 종료 시간
+            endtime.setOnClickListener(new View.OnClickListener() {    // 종료 시간
                 @Override
                 public void onClick(View view) {
                     Calendar mcurrentTime = Calendar.getInstance();
@@ -235,42 +254,49 @@ public class add_schedule extends Fragment {
                 }
             });
 
-
-            AppDatabase db = AppDatabase.getAppDatabase(getActivity());
-        ScheduleRespository repository = new ScheduleRespository(getContext());
-
-
-        // 알람 스위치 (오류 수정중!!!)
-        final boolean[] alarm = {false};
+        // 알람 여부
         Switch alarm_switch = (Switch) view.findViewById(R.id.switch_btn);
-        final String[] a = new String[1];
-        alarm_switch.setChecked(alarm[0]);
         alarm_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
                     alarm_switch.setChecked(true);
-                    alarm[0] = isChecked;
+                    alarm = true;
                 }
                 else {
                     alarm_switch.setChecked(false);
-                    alarm[0] =false;
+                    alarm = false;
                 }
-                a[0] = String.valueOf(alarm[0]);
             }
-
         });
 
+        // db 연동
+        AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+        ScheduleRespository repository = new ScheduleRespository(getContext());
+
+        // insert 하기
+        challenge challenge = new challenge();
          Button savebtn = (Button) view.findViewById(R.id.dailysave);
          savebtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+                 ScheduleEntity entity;
                  if(title.getText().toString().trim().length() <= 0) {
                      Toast.makeText(getActivity(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
                  }
                  else {
-                     ScheduleEntity entity = new ScheduleEntity( title.getText().toString(), (String) startdate.getText(), starttime.getText().toString(), enddate.getText().toString(), endtime.getText().toString());
+                     if(alarm == true && starttime.getText().toString().trim().length() <=0) {
+                         Toast.makeText(getActivity(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                     }
+                     if(enddate.getText().toString().trim().length() <= 0) {
+                        entity = new ScheduleEntity(title.getText().toString(), color, alarm, (String) startdate.getText(), starttime.getText().toString(), startdate.getText().toString(), endtime.getText().toString());
+                     }
+                     else {
+                         entity = new ScheduleEntity(title.getText().toString(), color, alarm, (String) startdate.getText(), starttime.getText().toString(), enddate.getText().toString(), endtime.getText().toString());
+                     }
                      repository.insert(entity);
+                     //fragmentTransaction.replace(R.id.frameLayout,challenge);  // 메인으로 돌아가기
+                     //fragmentTransaction.commit();
                      Log.i(TAG, entity.toString());
                  }
              }

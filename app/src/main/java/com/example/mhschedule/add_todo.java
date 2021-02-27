@@ -22,38 +22,39 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link add_todo#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class add_todo extends Fragment {
 
     public static final int REQUEST_CODE1 = 500;
     private static final String TAG = "add_todo";
 
-    public add_todo() {
-        // Required empty public constructor
-    }
+    public add_todo() {}
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+       View view = inflater.inflate(R.layout.add_todo, container, false);
 
-        View view = inflater.inflate(R.layout.add_todo, container, false);
+       TextView replay = view.findViewById(R.id.replay);  // 요일 반복 선택
+       TextView title = view.findViewById(R.id.todocontent); // 제목
 
-
-        TextView replay = view.findViewById(R.id.replay);
-        TextView title = view.findViewById(R.id.todocontent);
+        // 일정으로 변환
+        add_schedule schedule = new add_schedule();
+        RadioButton btn = view.findViewById(R.id.dailybtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout,schedule);
+                fragmentTransaction.commit();
+            }
+        });
 
         // 터치색 변환
         replay.setOnTouchListener(new View.OnTouchListener(){
@@ -68,6 +69,7 @@ public class add_todo extends Fragment {
                 return false;
             }
         });
+
         // 반복 요일 선택
         replay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,29 +79,23 @@ public class add_todo extends Fragment {
             }
         });
 
-
-        add_schedule schedule = new add_schedule();
-        RadioButton btn = view.findViewById(R.id.dailybtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout,schedule);
-                fragmentTransaction.commit();
-            }
-        });
-
-
+        // db 연결
         AppDatabase db = AppDatabase.getAppDatabase(getActivity());
         TodoRespository repository = new TodoRespository(getContext());
         Button save = (Button) view.findViewById(R.id.todosave);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                TodoEntity entity;
                 if(title.getText().toString().trim().length() <= 0) {
                     Toast.makeText(getActivity(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 } else{
-                    TodoEntity entity = new TodoEntity(title.getText().toString(), replay.getText().toString());
+                    if (replay.getText().toString().trim().length() <=0) {
+                        entity = new TodoEntity(title.getText().toString(), "today");
+                    }
+                    else {
+                        entity = new TodoEntity(title.getText().toString(), replay.getText().toString());
+                    }
                     repository.insert(entity);
                     Log.i(TAG, entity.toString());
                 }
@@ -109,7 +105,6 @@ public class add_todo extends Fragment {
     }
 
 
-
     // 요일 값 받기
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -117,7 +112,6 @@ public class add_todo extends Fragment {
         TextView weekbtn = (TextView) getView().findViewById(R.id.replay);
         weekbtn.setText(getstr);
     }
-
 }
 
 
