@@ -1,6 +1,7 @@
 package com.example.mhschedule;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -11,12 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mhschedule.decorators.EventDecorator;
 import com.example.mhschedule.decorators.OneDayDecorator;
@@ -31,6 +35,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
+
+//import org.threeten.bp.LocalDate;
+
 
 public class Calendar_ extends Fragment {
 
@@ -51,6 +58,7 @@ public class Calendar_ extends Fragment {
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
+
         materialCalendarView.addDecorators(
                 new SundayDecorator(),
                 new SaturdayDecorator(),
@@ -67,6 +75,7 @@ public class Calendar_ extends Fragment {
                 int Month = date.getMonth() + 1;
                 int Day = date.getDay();
 
+
                 Log.i("Year test", Year + "");
                 Log.i("Month test", Month + "");
                 Log.i("Day test", Day + "");
@@ -76,11 +85,21 @@ public class Calendar_ extends Fragment {
                 Log.i("shot_Day test", shot_Day + "");
                 materialCalendarView.clearSelection();
 
-                Toast.makeText(getContext(), shot_Day , Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity() , Cal_list_MainActivity.class);
+                startActivity(intent); // 액티비티 이동.
+
+
             }
         });
+
+
+
+
+
         return view;
     }
+
+
 
     private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 

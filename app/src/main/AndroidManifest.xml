@@ -31,6 +31,9 @@
         <activity android:name=".AlarmActivity">
 
         </activity>
+        <activity android:name=".Cal_list_MainActivity">
+        </activity>
+
     </application>
 
 </manifest>
