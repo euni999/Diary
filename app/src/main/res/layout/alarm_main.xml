@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="알람"
         android:textSize="50dp"
-        android:gravity="center_horizontal"
-        />
+        android:gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/add_alarm"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/add_btn"
-        android:layout_marginTop="450dp"
-        android:layout_marginLeft="230dp"
-        />
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/delete_alarm_all"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="삭제"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp" />
+        <Button
+            android:id="@+id/add_alarm"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add_btn"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="230dp" />
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="90dp"
+            tools:listitem="@layout/round_theme">
+        </ListView>
+
+    </RelativeLayout>
+</LinearLayout>

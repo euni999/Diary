@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MHSchedule">
+        <activity
+            android:name=".week"
+            android:label="@string/title_activity_week"
+            android:theme="@style/Theme.MHSchedule.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +23,7 @@
         <activity android:name=".Alarm_Add">
 
         </activity>
+
         <receiver android:name=".Alarm_Receiver" />
         <service
             android:name=".Alarm_Service"
