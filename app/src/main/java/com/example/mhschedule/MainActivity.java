@@ -15,8 +15,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
 
-    private challenge home = new challenge();
-    private add_schedule schedule = new add_schedule();
+    //private challenge home = new challenge();
+    //private add_schedule schedule = new add_schedule();
+    private Alarm home = new Alarm();
+    private Calendar_ schedule = new Calendar_();
     private test3 challenge = new test3();
 
 
