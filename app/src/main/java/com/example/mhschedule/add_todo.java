@@ -44,17 +44,6 @@ public class add_todo extends Fragment {
        TextView replay = view.findViewById(R.id.replay);  // 요일 반복 선택
        TextView title = view.findViewById(R.id.todocontent); // 제목
 
-        // 일정으로 변환
-        add_schedule schedule = new add_schedule();
-        RadioButton btn = view.findViewById(R.id.dailybtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout,schedule);
-                fragmentTransaction.commit();
-            }
-        });
 
         // 터치색 변환
         replay.setOnTouchListener(new View.OnTouchListener(){

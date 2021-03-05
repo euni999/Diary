@@ -31,7 +31,14 @@
         <activity android:name=".AlarmActivity">
 
         </activity>
-        <activity android:name=".Cal_list_MainActivity">
+
+        <activity
+            android:name=".Cal_list_MainActivity">
+        </activity>
+
+
+        <activity
+            android:name=".add_Activity">
         </activity>
 
     </application>

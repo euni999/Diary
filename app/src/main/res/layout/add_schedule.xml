@@ -6,40 +6,6 @@
     tools:context=".add_schedule">
 
     <!-- TODO: Update blank fragment layout -->
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="parent"
-        tools:layout_editor_absoluteY="parent" >
-
-
-        <RadioButton
-            android:id="@+id/dailybtn"
-            android:layout_width="127dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="80dp"
-            android:text="daily"
-            android:fontFamily="@font/spartan"
-            android:textSize="20sp"
-            android:checked="true"
-            tools:layout_editor_absoluteY="27dp"/>
-
-        <RadioButton
-            android:id="@+id/todobtn"
-            android:layout_width="127dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"
-            android:text="To do"
-            android:fontFamily="@font/spartan"
-            android:textSize="20sp"
-            android:checked="false"
-            tools:layout_editor_absoluteY="27dp" />
-
-    </RadioGroup>
 
     <RadioGroup
         android:id="@+id/btn_color"

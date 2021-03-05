@@ -1,6 +1,7 @@
 package com.example.mhschedule;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,9 +37,11 @@ public class Cal_list_MainActivity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recycle_data mainData = new recycle_data(R.mipmap.ic_launcher, "홍드로이드", "리사이클러뷰");
-                arrayList.add(mainData);
-                mainAdapter.notifyDataSetChanged();
+//                recycle_data mainData = new recycle_data(R.mipmap.ic_launcher, "홍드로이드", "리사이클러뷰");
+//                arrayList.add(mainData);
+//                mainAdapter.notifyDataSetChanged();
+                Intent intent = new Intent( Cal_list_MainActivity.this, add_Activity.class);
+                startActivity(intent); // 액티비티 이동.
             }
         });
     }
