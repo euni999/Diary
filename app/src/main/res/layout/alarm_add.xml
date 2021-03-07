@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Alarm_Add">
+
 
     <TextView
         android:id="@+id/title"
@@ -23,13 +24,79 @@
         android:layout_marginTop="100dp"
         />
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toggle_button_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="330dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="30dp"
+        app:selectionRequired="true">
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/sun"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="일"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/mon"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="월"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/tue"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="화"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/wed"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="수"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/thu"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="목"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/fri"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="금"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/sat"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="토"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
     <Button
         android:id="@+id/set_alarm"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/alarm_set_btn"
+        android:onClick="setAlarm"
         android:layout_marginTop="400dp"
         android:layout_marginLeft="50dp"
+        />
+
+    <Button
+        android:id="@+id/cancel_alarm"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="해제"
+        android:onClick="cancelAlarm"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="230dp"
         />
 </RelativeLayout>

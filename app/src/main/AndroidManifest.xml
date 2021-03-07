@@ -19,6 +19,7 @@
         <activity android:name=".Alarm_Add">
 
         </activity>
+
         <receiver android:name=".Alarm_Receiver" />
         <service
             android:name=".Alarm_Service"

@@ -10,7 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Alarm home = new Alarm();
+    private Alarm alarm = new Alarm();
     private test2 schedule = new test2();
     private test3 challenge = new test3();
 
@@ -19,15 +19,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 초기 값을 Home 화면으로 해줌
-        replaceFragment(home);
+        // 초기 값을 alarm 화면으로 해줌
+        replaceFragment(alarm);
 
         BottomNavigationView bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnNavigationItemSelectedListener( (item) -> {
             switch (item.getItemId())
             {
-                case R.id.home :
-                    replaceFragment(home);
+                case R.id.alarm :
+                    replaceFragment(alarm);
                     return true;
                 case R.id.schedule :
                     replaceFragment(schedule);
