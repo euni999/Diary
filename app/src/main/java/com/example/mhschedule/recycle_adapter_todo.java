@@ -1,44 +1,46 @@
 package com.example.mhschedule;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
-public class recycle_adapter extends RecyclerView.Adapter<recycle_adapter.CustomViewHolder> {
+public class recycle_adapter_todo extends RecyclerView.Adapter<recycle_adapter_todo.CustomViewHolder> {
 
-    private ArrayList<recycle_data> arrayList;
+    private ArrayList<recycle_data_todo> arrayList;
 
-    public recycle_adapter(ArrayList<recycle_data> arrayList) {
+    public recycle_adapter_todo(ArrayList<recycle_data_todo> arrayList) {
         this.arrayList = arrayList;
     }
 
     @NonNull
     @Override
-    public recycle_adapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_item,parent,false);
-        CustomViewHolder holder = new CustomViewHolder(view);
 
-        return holder;
+    public recycle_adapter_todo.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+        View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_item_todo,parent,false);
+        CustomViewHolder holder2 = new CustomViewHolder(view2);
+
+        return holder2;
     }
 
-
     @Override
-    public void onBindViewHolder(@NonNull recycle_adapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull recycle_adapter_todo.CustomViewHolder holder, int position) {
 
-        holder.schedule_content.setText(arrayList.get(position).getSchedule_content());
+        holder.todo_content.setText(arrayList.get(position).getTodo_content());
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String curName = holder.schedule_content.getText().toString();
+                String curName = holder.todo_content.getText().toString();
                 //Toast.makeText(v.getContext(), curName, Toast.LENGTH_SHORT).show();
             }
         });
@@ -56,6 +58,7 @@ public class recycle_adapter extends RecyclerView.Adapter<recycle_adapter.Custom
 
     @Override
     public int getItemCount() {
+
         return (null != arrayList ? arrayList.size() : 0);
     }
 
@@ -71,15 +74,15 @@ public class recycle_adapter extends RecyclerView.Adapter<recycle_adapter.Custom
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView schedule_content;
+        protected TextView todo_content;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.schedule_content = (TextView) itemView.findViewById(R.id.schedule_content);
+            this.todo_content = (TextView) itemView.findViewById(R.id.todo_content);
         }
     }
 
-
+    public void removeItemAll() { arrayList.clear(); }
 
 }
 

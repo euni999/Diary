@@ -84,7 +84,6 @@ public class add_schedule extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_schedule, container, false);
 
-        Log.i("test2","입성");
 
         // 제목
         TextView title = (TextView) view.findViewById(R.id.content);
@@ -261,11 +260,10 @@ public class add_schedule extends Fragment {
     });
 
     // db 연동
-    AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+
     ScheduleRespository repository = new ScheduleRespository(getContext());
 
     // insert 하기
-    challenge challenge = new challenge();
      Button savebtn = (Button) view.findViewById(R.id.dailysave);
      savebtn.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -285,9 +283,9 @@ public class add_schedule extends Fragment {
                      entity = new ScheduleEntity(title.getText().toString(), color, alarm, (String) startdate.getText(), starttime.getText().toString(), enddate.getText().toString(), endtime.getText().toString());
                  }
                  repository.insert(entity);
-                 //fragmentTransaction.replace(R.id.frameLayout,challenge);  // 메인으로 돌아가기
-                 //fragmentTransaction.commit();
                  Log.i(TAG, entity.toString());
+                 getActivity().finish();
+
              }
          }
      });
@@ -297,6 +295,10 @@ public class add_schedule extends Fragment {
     }
 
 }
+
+//                recycle_data mainData = new recycle_data(R.mipmap.ic_launcher, "홍드로이드", "리사이클러뷰");
+//                arrayList.add(mainData);
+//                mainAdapter.notifyDataSetChanged();
 
 
 

@@ -87,6 +87,8 @@ public class add_todo extends Fragment {
                     }
                     repository.insert(entity);
                     Log.i(TAG, entity.toString());
+                    getActivity().finish();
+
                 }
             }
         });

@@ -1,6 +1,7 @@
 package com.example.mhschedule;
 
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,11 +47,42 @@ public class Calendar_ extends Fragment {
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
     Cursor cursor;
     MaterialCalendarView materialCalendarView;
+//    private TextView Month_day;
+//    private DatePickerDialog.OnDateSetListener callbackMethod;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cal_add, container, false);
         materialCalendarView = (MaterialCalendarView)view.findViewById(R.id.calendarView);
+
+//
+//        this.InitializeView();
+//        this.InitializeListener();
+//
+//        public void InitializeView()
+//        {
+//            Month_day = (TextView)findViewById(R.id.Month_day);
+//        }
+//
+//        public void InitializeListener()
+//        {
+//            callbackMethod = new DatePickerDialog.OnDateSetListener()
+//            {
+//                @Override
+//                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+//                {
+//                    Month_day.setText(year + "년" + monthOfYear + "월" + dayOfMonth + "일");
+//                }
+//            };
+//        }
+//
+//        public void OnClickHandler(View view)
+//        {
+//            DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod, 2019, 5, 24);
+//
+//            dialog.show();
+//        }
 
         materialCalendarView.state().edit()
                 .setFirstDayOfWeek(Calendar.SUNDAY)
@@ -85,9 +118,11 @@ public class Calendar_ extends Fragment {
                 Log.i("shot_Day test", shot_Day + "");
                 materialCalendarView.clearSelection();
 
-                Intent intent = new Intent(getActivity() , Cal_list_MainActivity.class);
-                startActivity(intent); // 액티비티 이동.
 
+
+                Intent intent = new Intent(getActivity() , Cal_list_MainActivity.class);
+                intent.putExtra("monthday", Integer.toString(Month)+"월"+" "+Integer.toString(Day)+"일");
+                startActivity(intent); // 액티비티 이동.
 
             }
         });

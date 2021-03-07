@@ -10,7 +10,7 @@ import java.util.List;
 public class TodoRespository {
     private static final String TAG = "TodoRespository";
     private final TodoDAO todoDAO;
-    private final List<TodoEntity> todo;
+    private final LiveData<List<TodoEntity>> todo;
 
 
     TodoRespository(Context context) {
@@ -55,7 +55,7 @@ public class TodoRespository {
         }.execute();
     }
 
-    public List<TodoEntity> getAll() {return todo;}
+    public LiveData<List<TodoEntity>> getAll() {return todo;}
 
 
 }

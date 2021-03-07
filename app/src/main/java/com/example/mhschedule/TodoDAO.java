@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface TodoDAO {
     @Query("SELECT * FROM TodoEntity")
-    List<TodoEntity>getAll();
+    LiveData<List<TodoEntity>>getAll();
 
     @Insert
     void insert(TodoEntity todo);
