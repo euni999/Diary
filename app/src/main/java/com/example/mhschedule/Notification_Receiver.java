@@ -16,7 +16,6 @@ import androidx.core.app.NotificationCompat;
 
 public class Notification_Receiver extends BroadcastReceiver {
 
-
         NotificationManager manager;
         NotificationCompat.Builder builder;
 
@@ -27,6 +26,7 @@ public class Notification_Receiver extends BroadcastReceiver {
         @Override
         public void onReceive (Context context, Intent intent){
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            String title = intent.getStringExtra("title");
 
             builder = null;
             manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -41,11 +41,11 @@ public class Notification_Receiver extends BroadcastReceiver {
 
             //알림창 클릭 시 activity 화면 부름
             Intent intent2 = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 101, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.schedule2);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, (int)(System.currentTimeMillis()/1000), intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.schedule);
 
             //알림창 제목
-            builder.setContentTitle("일정이 있습니다.");
+            builder.setContentTitle("' " + title + " ' 일정이 있습니다.");
             //알림창 내용
             builder.setContentText("일정을 확인하세요");
             //알림창 아이콘
@@ -58,7 +58,7 @@ public class Notification_Receiver extends BroadcastReceiver {
             builder.setContentIntent(pendingIntent);
 
             Notification notification = builder.build();
-            manager.notify(1, notification);
+            manager.notify((int)(System.currentTimeMillis()/1000), notification);
 
         }
     }

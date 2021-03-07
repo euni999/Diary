@@ -98,7 +98,6 @@ public class add_schedule extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_schedule, container, false);
 
-
         // 제목
         TextView title = (TextView) view.findViewById(R.id.content);
 
@@ -120,7 +119,6 @@ public class add_schedule extends Fragment {
                 }
             }
         });
-
 
         // 날짜 변환
         TextView startdate = (TextView) view.findViewById(R.id.startDate);
@@ -301,7 +299,7 @@ public class add_schedule extends Fragment {
                          Toast.makeText(getActivity(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                      }
                      else {  // 알람 시작 시간 설정함
-                         diaryNotification((String) startdate.getText(), stime);
+                         diaryNotification( title.getText().toString(), (String) startdate.getText(), stime);
                      }
                  }
                  if(enddate.getText().toString().trim().length() <= 0) {
@@ -321,13 +319,14 @@ public class add_schedule extends Fragment {
         return view;
     }
 
-    private void diaryNotification(String sdate, String stime)
+    private void diaryNotification(String content, String sdate, String stime)
     {
         NotificationManager notificationMgr = (NotificationManager)getActivity().getSystemService(getContext().NOTIFICATION_SERVICE);
 
         AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
         Intent receiverIntent = new Intent(getActivity(), Notification_Receiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, receiverIntent, 0);
+        receiverIntent.putExtra("title", content);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), (int)(System.currentTimeMillis()/1000), receiverIntent, 0);
 
         String from = sdate + " " + stime; //임의로 날짜와 시간을 지정
 
