@@ -1,17 +1,15 @@
 package com.example.mhschedule;
 import androidx.room.*;
 
-import java.sql.Time;
-import java.util.Date;
-
 @Entity (tableName = "schedule")
 public class ScheduleEntity {
     @PrimaryKey(autoGenerate = true)
     public int scheduleId;
-    private String content, color, sdate, edate, stime, etime;
+    private String rabel, content, color, sdate, edate, stime, etime;
     private Boolean alarm;
 
-    public ScheduleEntity( String content, String color, Boolean alarm, String sdate, String stime, String edate, String etime) {
+    public ScheduleEntity( String rabel, String content, String color, Boolean alarm, String sdate, String stime, String edate, String etime) {
+        this.rabel = rabel;
         this.content = content;
         this.color = color;
         this.alarm = alarm;
@@ -25,6 +23,7 @@ public class ScheduleEntity {
     public void setId(int scheduleId) {this.scheduleId = scheduleId;}
 
     public Boolean getAlarm() {return alarm;}
+    public String getRabel() {return rabel;}
     public String getColor() {return color;}
     public String getContent() {return content;}
     public String getSdate() {return sdate;}
@@ -33,17 +32,9 @@ public class ScheduleEntity {
     public String getEtime() {return etime;}
 
     public void setContent(String content) {this.content = content;}
-    //public void setAlarm(String alarm) {this.alarm = alarm;}
-    /*
-    public void setSdate(String sdate) {this.sdate = sdate;}
-    public void setEdate(String edate) {this.edate = edate;}
-    public void setStime(String stime) {this.stime = stime;}
-    public void setEtime(String etime) {this.etime = etime;}
-    
-     */
 
     public String toString() {
-        return "alarm : "+ alarm + " / content : " + content + " / color : " + color + " <" + sdate + " " + stime + " ~ " + edate+ " " + etime + ">";
+        return rabel + " / alarm : "+ alarm + " / content : " + content + " / color : " + color + " <" + sdate + " " + stime + " ~ " + edate+ " " + etime + ">";
     }
 }
 

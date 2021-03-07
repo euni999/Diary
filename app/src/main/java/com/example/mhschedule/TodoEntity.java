@@ -8,9 +8,10 @@ import java.util.Calendar;
 public class TodoEntity {
     @PrimaryKey(autoGenerate = true)
     public int todoId;
-    private String content, week;
+    private String rabel, content, week;
 
-    public TodoEntity(String content, String week) {
+    public TodoEntity(String rabel, String content, String week) {
+        this.rabel = rabel;
         this.content = content;
         this.week = week;
     }
@@ -18,6 +19,7 @@ public class TodoEntity {
     public int getId() {return todoId;}
     public void setId(int todoId) {this.todoId = todoId;}
 
+    public String getRabel() {return rabel;}
     public String getContent() {return content;}
     public String getWeek() {return week;}
 
@@ -25,7 +27,7 @@ public class TodoEntity {
     public void setWeek(String week) {this.week = week;}
 
     public String toString() {
-        return "content : " + content +" / 요일 : " + week;
+        return rabel + " / content : " + content +" / 요일 : " + week;
     }
 }
 

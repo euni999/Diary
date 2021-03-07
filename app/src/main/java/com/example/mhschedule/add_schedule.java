@@ -1,9 +1,17 @@
 package com.example.mhschedule;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -26,9 +34,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class add_schedule extends Fragment {
     static final String TAG = "add_schedule";
@@ -42,6 +54,8 @@ public class add_schedule extends Fragment {
     Calendar myCalendar = Calendar.getInstance();
     String color = "transparency";  // 일정 색
     boolean alarm = false;  // 알람 여부
+    String rabel = "schedule";
+    String stime;
 
     DatePickerDialog.OnDateSetListener startDatePicker = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -64,14 +78,14 @@ public class add_schedule extends Fragment {
 
     // 날짜 표시
     private void stupdateLabel() {   // 시작 날짜 표시
-        String myFormat = "yyyy년 MM월 dd일";    // 출력형식   2018년 3월 22일
+        String myFormat = "yyyy-MM-dd";    // 출력형식   2018년 3월 22일
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
 
         TextView startdate = (TextView) getView().findViewById(R.id.startDate);
         startdate.setText(sdf.format(myCalendar.getTime()));
     }
     private void endupdateLabel() {   // 종료 날짜 표시
-        String myFormat = "yyyy년 MM월 dd일";    // 출력형식   2018년 3월 22일
+        String myFormat = "yyyy-MM-dd";    // 출력형식   2018년 3월 22일
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
 
         TextView enddate = (TextView) getView().findViewById(R.id.endDate);
@@ -84,7 +98,6 @@ public class add_schedule extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_schedule, container, false);
 
-        Log.i("test2","입성");
 
         // 제목
         TextView title = (TextView) view.findViewById(R.id.content);
@@ -157,11 +170,17 @@ public class add_schedule extends Fragment {
 
                         }
                         // EditText에 출력할 형식 지정
-                        starttime.setText(hourOfDay + " :" + minute + " " + state);
+                        starttime.setText(hourOfDay + " : " + minute + " " + state);
+                        stime = hourOfDay + ":" + minute;
                     }
                 }, hour, minute, false); // true의 경우 24시간 형식의 TimePicker 출현 // mTimePicker.setTitle("Choose hour:");
                 mTimePicker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 mTimePicker.show();
+
+            myCalendar.setTimeInMillis(System.currentTimeMillis());
+            myCalendar.set(Calendar.HOUR_OF_DAY, hour);
+            myCalendar.set(Calendar.MINUTE, minute);
+            myCalendar.set(Calendar.SECOND, 0);
             }
         });
         endtime.setOnClickListener(new View.OnClickListener() {    // 종료 시간
@@ -265,24 +284,31 @@ public class add_schedule extends Fragment {
     ScheduleRespository repository = new ScheduleRespository(getContext());
 
     // insert 하기
-    challenge challenge = new challenge();
      Button savebtn = (Button) view.findViewById(R.id.dailysave);
      savebtn.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
              ScheduleEntity entity;
-             if(title.getText().toString().trim().length() <= 0) {
+             if(title.getText().toString().trim().length() <= 0) {  // 제목 부재
                  Toast.makeText(getActivity(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
              }
-             else {
-                 if(alarm == true && starttime.getText().toString().trim().length() <=0) {
-                     Toast.makeText(getActivity(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
+             if(startdate.getText().toString().trim().length() <=0) {  // 시작 날짜 부재
+                 Toast.makeText(getActivity(), "날짜를 입력해주세요.", Toast.LENGTH_SHORT).show();
+             }
+             if (title.getText().toString().trim().length() > 0 && startdate.getText().toString().trim().length() >0) {
+                 if (alarm == true) {  // 알람 설정을 했을 때
+                     if (starttime.getText().toString().trim().length() <= 0) {  // 알람 시작 시간 비었을 때
+                         Toast.makeText(getActivity(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                     }
+                     else {  // 알람 시작 시간 설정함
+                         diaryNotification((String) startdate.getText(), stime);
+                     }
                  }
                  if(enddate.getText().toString().trim().length() <= 0) {
-                    entity = new ScheduleEntity(title.getText().toString(), color, alarm, (String) startdate.getText(), starttime.getText().toString(), startdate.getText().toString(), endtime.getText().toString());
+                    entity = new ScheduleEntity(rabel, title.getText().toString(), color, alarm, (String) startdate.getText(), starttime.getText().toString(), startdate.getText().toString(), endtime.getText().toString());
                  }
                  else {
-                     entity = new ScheduleEntity(title.getText().toString(), color, alarm, (String) startdate.getText(), starttime.getText().toString(), enddate.getText().toString(), endtime.getText().toString());
+                     entity = new ScheduleEntity(rabel, title.getText().toString(), color, alarm, (String) startdate.getText(), starttime.getText().toString(), enddate.getText().toString(), endtime.getText().toString());
                  }
                  repository.insert(entity);
                  //fragmentTransaction.replace(R.id.frameLayout,challenge);  // 메인으로 돌아가기
@@ -292,8 +318,33 @@ public class add_schedule extends Fragment {
          }
      });
 
-
         return view;
+    }
+
+    private void diaryNotification(String sdate, String stime)
+    {
+        NotificationManager notificationMgr = (NotificationManager)getActivity().getSystemService(getContext().NOTIFICATION_SERVICE);
+
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        Intent receiverIntent = new Intent(getActivity(), Notification_Receiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, receiverIntent, 0);
+
+        String from = sdate + " " + stime; //임의로 날짜와 시간을 지정
+
+        //날짜 포맷을 바꿔주는 소스코드
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date datetime = null;
+        try {
+            datetime = dateFormat.parse(from);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datetime);
+
+        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(),pendingIntent);
+
     }
 
 }

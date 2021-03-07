@@ -14,7 +14,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 @Database(entities = {
             AlarmEntity.class,
             ScheduleEntity.class,
-            TodoEntity.class
+            TodoEntity.class,
         },
         version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

@@ -26,6 +26,7 @@ public class add_todo extends Fragment {
 
     public static final int REQUEST_CODE1 = 500;
     private static final String TAG = "add_todo";
+    String rabel = "todo";
 
     public add_todo() {}
 
@@ -80,10 +81,10 @@ public class add_todo extends Fragment {
                     Toast.makeText(getActivity(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 } else{
                     if (replay.getText().toString().trim().length() <=0) {
-                        entity = new TodoEntity(title.getText().toString(), "today");
+                        entity = new TodoEntity(rabel, title.getText().toString(), "today");
                     }
                     else {
-                        entity = new TodoEntity(title.getText().toString(), replay.getText().toString());
+                        entity = new TodoEntity(rabel, title.getText().toString(), replay.getText().toString());
                     }
                     repository.insert(entity);
                     Log.i(TAG, entity.toString());
