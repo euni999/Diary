@@ -46,6 +46,19 @@ public class AlarmRepository {
         }.execute(entity);
     }
 
+    public void delete(AlarmEntity entity)
+    {
+        new AsyncTask<AlarmEntity, Void, Void>() {
+            @Override
+            protected Void doInBackground(AlarmEntity... alarmEntities) {
+                if (alarmDAO != null)
+                    alarmDAO.delete(alarmEntities[0]);
+                return null;
+            }
+        }.execute(entity);
+    }
+
+
     public void deleteAll() {
         new AsyncTask<Void, Void, Void>() {
             @Override

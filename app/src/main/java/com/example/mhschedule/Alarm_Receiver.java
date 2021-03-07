@@ -24,7 +24,12 @@ public class Alarm_Receiver extends BroadcastReceiver {
         Log.d(TAG,"리시버 동작 시작!");
         boolean[] weekends = intent.getBooleanArrayExtra("weekend");
 
+        int alarmId = intent.getIntExtra("id",1);
+
         Calendar calendar = Calendar.getInstance();
+
+        Log.i(TAG,"id : " + Integer.toString(alarmId) + " today : " + calendar.get(Calendar.DAY_OF_WEEK) + " isAlarm : " + Boolean.toString(weekends[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
+        Log.i(TAG,"Action : " + intent.getAction());
         // 해당 요일이 알람이 안맞춰져있으면
         if(!weekends[calendar.get(Calendar.DAY_OF_WEEK) - 1])
         {
@@ -34,6 +39,7 @@ public class Alarm_Receiver extends BroadcastReceiver {
 
         if(intent.getAction().equals(ACTION_RESTART_SERVICE))
         {
+            Log.i(TAG,"알람 작동 부분 실행!");
             Intent alarmIntent = new Intent(context,AlarmActivity.class);
             // alarmIntent에 FLAG_ACTIVITY_NEW_TASK 라는 flag를 추가해주는 이유는 액티비티 밖에 있어도 실행이 될수 있도록 해줌
             context.startActivity(alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

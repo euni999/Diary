@@ -7,8 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+
+import androidx.room.TypeConverters;
 
 // exportSchema 를 false 로 해주므로 스키마를 추출안함
 @Database(entities = {
@@ -17,6 +21,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
             TodoEntity.class,
         },
         version = 1, exportSchema = false)
+@TypeConverters({Converter.class})
 public abstract class AppDatabase extends RoomDatabase {
     // 데이터베이스를 매번 생성하는건 리소스를 많이사용하므로 싱글톤이 권장된다고한다.
     private static AppDatabase INSTANCE;

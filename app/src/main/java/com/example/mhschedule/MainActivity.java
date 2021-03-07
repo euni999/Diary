@@ -15,12 +15,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
 
+
     //private challenge home = new challenge();
     //private add_schedule schedule = new add_schedule();
     private Calendar_ home = new Calendar_();
-    private add_schedule schedule = new add_schedule();
     private Alarm challenge = new Alarm();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,21 +27,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
         // 초기 값을 Home 화면으로 해줌
         replaceFragment(home);
+
 
         BottomNavigationView bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnNavigationItemSelectedListener( (item) -> {
             switch (item.getItemId())
             {
-                case R.id.home :
-                    replaceFragment(home);
+                case R.id.alarm :
+                    replaceFragment(alarm);
                     return true;
-                case R.id.schedule :
-                    replaceFragment(schedule);
-                    return true;
+//                 case R.id.schedule :
+//                     replaceFragment(schedule);
+//                     return true;
                 case R.id.challenge :
                     replaceFragment(challenge);
                     return true;

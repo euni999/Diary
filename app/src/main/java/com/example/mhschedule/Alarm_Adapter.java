@@ -65,18 +65,6 @@ public class Alarm_Adapter extends BaseAdapter {
         }
     }
 
-    // 수정
-    public AlarmEntity modifyItem(int position,int hour,int minute)
-    {
-        AlarmEntity time = (AlarmEntity) getItem(position);
-        time.setHour(hour);
-        time.setMinute(minute);
-
-        listviewitem.set(position,time);
-
-        return time;
-    }
-
     //List 삭제 method
     public void removeItem(int position) {
         if(listviewitem.size() >= 1)

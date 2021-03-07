@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -66,7 +67,11 @@ public class Alarm extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 adapterPosition = position;
+                AlarmEntity entity = (AlarmEntity) arrayAdapter.getItem(position);
                 Intent intent = new Intent(getActivity(), Alarm_Add.class);
+                intent.setAction("MODIFY");
+                intent.putExtra("id",entity.getAlarmId());
+                intent.putExtra("weekends",entity.getWeekends());
                 startActivityForResult(intent,REQUEST_CODE2);
             }
         });
@@ -104,20 +109,15 @@ public class Alarm extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode,resultCode,data);
-        Log.d(TAG,Integer.toString(resultCode));
 
         if(data != null && resultCode == RESULT_OK)
         {
-            int hour,minute;
-            hour = data.getIntExtra("hour", 1);
-            minute = data.getIntExtra("minute", 2);
-
+            AlarmEntity entity = (AlarmEntity) data.getSerializableExtra("entity");
             //시간 리스트 추가하는 경우
             if(requestCode == REQUEST_CODE1)
             {
                 Log.d(TAG,"알람 목록 추가");
                 // Entity 객체 생성 및 설정 한뒤 DB 에 insert 해줌
-                AlarmEntity entity = new AlarmEntity(hour,minute);
                 repository.insert(entity);
                 Log.i(TAG,entity.toString());
             }
@@ -126,7 +126,6 @@ public class Alarm extends Fragment {
             if(requestCode == REQUEST_CODE2)
             {
                 Log.d(TAG,"알람 목록 수정");
-                AlarmEntity entity = arrayAdapter.modifyItem(adapterPosition,hour,minute);
                 Log.i(TAG,entity.toString());
                 repository.update(entity);
             }
