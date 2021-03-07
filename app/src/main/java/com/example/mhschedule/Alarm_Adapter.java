@@ -76,10 +76,7 @@ public class Alarm_Adapter extends BaseAdapter {
             listviewitem.remove(listviewitem.size()-1);
     }
 
-    public void removeItemAll()
-    {
-        listviewitem.clear();
-    }
+    public void removeItemAll() { listviewitem.clear(); }
 
     static class ViewHolder {
         TextView hourText, minuteText;

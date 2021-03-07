@@ -1,26 +1,35 @@
 package com.example.mhschedule;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Alarm alarm = new Alarm();
-    private test2 schedule = new test2();
-    private test3 challenge = new test3();
+
+
+    //private challenge home = new challenge();
+    //private add_schedule schedule = new add_schedule();
+    private Calendar_ home = new Calendar_();
+    private Alarm challenge = new Alarm();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 초기 값을 alarm 화면으로 해줌
-        replaceFragment(alarm);
+
+        // 초기 값을 Home 화면으로 해줌
+        replaceFragment(home);
+
 
         BottomNavigationView bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnNavigationItemSelectedListener( (item) -> {
@@ -29,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.alarm :
                     replaceFragment(alarm);
                     return true;
-                case R.id.schedule :
-                    replaceFragment(schedule);
-                    return true;
+//                 case R.id.schedule :
+//                     replaceFragment(schedule);
+//                     return true;
                 case R.id.challenge :
                     replaceFragment(challenge);
                     return true;
@@ -39,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                     return false;
             }
         });
+
+
+
     }
 
     // 실제 fragment 가 바꾸는 함수
@@ -49,4 +61,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
     }
+
 }

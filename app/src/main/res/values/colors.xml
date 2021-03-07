@@ -10,4 +10,5 @@
 
     <color name="background">#EEEEEE</color>
     <color name="stroke">#CCCCCC</color>
+    <color name="right_purple">#E85FF3</color>
 </resources>
