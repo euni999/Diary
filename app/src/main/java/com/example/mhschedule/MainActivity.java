@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     //private challenge home = new challenge();
     //private add_schedule schedule = new add_schedule();
-    private Calendar_ home = new Calendar_();
-    private Alarm challenge = new Alarm();
+    private Calendar_ schedule = new Calendar_();
+    private Alarm home = new Alarm();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +35,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNavBar.setOnNavigationItemSelectedListener( (item) -> {
             switch (item.getItemId())
             {
-                case R.id.alarm :
-                    replaceFragment(alarm);
+                case R.id.home :
+                    replaceFragment(home);
                     return true;
-//                 case R.id.schedule :
-//                     replaceFragment(schedule);
-//                     return true;
-                case R.id.challenge :
-                    replaceFragment(challenge);
-                    return true;
+                 case R.id.schedule :
+                     replaceFragment(schedule);
+                     return true;
+
                 default:
                     return false;
             }

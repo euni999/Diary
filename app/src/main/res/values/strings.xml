@@ -2,8 +2,7 @@
     <string name="app_name">MHSchedule</string>
 
     <string name="menu_home">Alarm</string>
-    <string name="menu_schedule">Schedule</string>
-    <string name="menu_challenge">Challenge</string>
+    <string name="menu_schedule">Calendar</string>
 
     <string name="alarm_set_btn">설정</string>
     <string name="add_btn">추가</string>
