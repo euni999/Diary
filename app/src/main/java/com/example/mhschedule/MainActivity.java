@@ -17,9 +17,9 @@ public class MainActivity extends AppCompatActivity {
 
     //private challenge home = new challenge();
     //private add_schedule schedule = new add_schedule();
-    private Alarm home = new Alarm();
-    private Calendar_ schedule = new Calendar_();
-    private test3 challenge = new test3();
+    private Calendar_ home = new Calendar_();
+    private add_schedule schedule = new add_schedule();
+    private Alarm challenge = new Alarm();
 
 
     @Override
