@@ -80,7 +80,7 @@
         android:ems="10"
         android:textSize="20sp"
         android:gravity="right"
-        android:fontFamily="@font/poorstory"
+        android:fontFamily="@font/susu"
         android:includeFontPadding="true"
         android:paddingTop="15dp"
         android:background="@drawable/back"

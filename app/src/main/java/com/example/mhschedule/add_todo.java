@@ -31,7 +31,6 @@ public class add_todo extends Fragment {
     public add_todo() {}
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,11 +76,11 @@ public class add_todo extends Fragment {
             @Override
             public void onClick(View view) {
                 TodoEntity entity;
-                if(title.getText().toString().trim().length() <= 0) {
+                if(title.getText().toString().trim().length() <= 0) {  // 제목 부재
                     Toast.makeText(getActivity(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 } else{
-                    if (replay.getText().toString().trim().length() <=0) {
-                        entity = new TodoEntity(rabel, title.getText().toString(), "today");
+                    if (replay.getText().toString().trim().length() <=0) {  // 반복 요일 없을 때
+                       entity = new TodoEntity(rabel, title.getText().toString(), "today");
                     }
                     else {
                         entity = new TodoEntity(rabel, title.getText().toString(), replay.getText().toString());
@@ -89,7 +88,6 @@ public class add_todo extends Fragment {
                     repository.insert(entity);
                     Log.i(TAG, entity.toString());
                     getActivity().finish();
-
                 }
             }
         });

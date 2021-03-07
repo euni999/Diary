@@ -127,10 +127,6 @@ public class Calendar_ extends Fragment {
             }
         });
 
-
-
-
-
         return view;
     }
 
@@ -168,8 +164,6 @@ public class Calendar_ extends Fragment {
                 dates.add(day);
                 calendar.set(year,month-1,dayy);
             }
-
-
 
             return dates;
         }
