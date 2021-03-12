@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_schedule">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RadioGroup
+        android:id="@+id/btn_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="left"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btn_red"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:button="@drawable/btn_red"
+            android:background="@drawable/btn_red_click"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+        <RadioButton
+            android:id="@+id/btn_yellow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:button="@drawable/btn_yellow"
+            android:background="@drawable/btn_yellow_click"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+        <RadioButton
+            android:id="@+id/btn_sky"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:button="@drawable/btn_sky"
+            android:background="@drawable/btn_sky_click"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+    </RadioGroup>
+
+    <Switch
+        android:id="@+id/switch_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="90dp"
+        android:layout_marginRight="15dp"
+        android:fontFamily="@font/susu"
+        android:paddingLeft="15dp"
+        android:text="알람"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="150dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:background="@drawable/back"
+        android:hint="제목"
+        android:fontFamily="@font/susu"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteY="107dp" />
+
+
+    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:ems="10"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:fontFamily="@font/poorstory"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="190dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="230dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="시작 날짜"
+        android:fontFamily="@font/susu"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/startTime"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="time"
+        android:layout_marginTop="280dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:fontFamily="@font/susu"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="243dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="시작 시간"
+        android:fontFamily="@font/susu"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="date"
+        android:layout_marginTop="370dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:fontFamily="@font/susu"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="334dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="종료 날짜"
+        android:fontFamily="@font/susu"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/endTime"
+        android:layout_width="377dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="time"
+        android:layout_marginTop="420dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:fontFamily="@font/susu"
+        android:includeFontPadding="true"
+        android:paddingTop="15dp"
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteY="387dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="420dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="18dp"
+        android:text="종료 시간"
+        android:fontFamily="@font/susu"
+        android:includeFontPadding="false"
+        android:textSize="20sp" />
+
+
+    <Button
+        android:id="@+id/dailysave"
+        android:layout_width="377dp"
+        android:layout_height="55dp"
+        android:text="저장하기"
+        android:textSize="20sp"
+        android:fontFamily="@font/susu"
+        android:backgroundTint="@color/right_purple"
+        android:layout_marginTop="530dp"
+        android:layout_gravity="center_horizontal"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="508dp" />
+
+
+
+</FrameLayout>

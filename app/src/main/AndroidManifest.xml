@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mhschedule">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MHSchedule">
+        <activity
+            android:name=".week"
+            android:label="@string/title_activity_week"
+            android:theme="@style/Theme.MHSchedule.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +21,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Alarm_Add">
+
+        </activity>
+
+        <receiver android:name=".Alarm_Receiver" />
+        <service
+            android:name=".Alarm_Service"
+            android:enabled="true"></service>
+        <activity android:name=".AlarmActivity">
+
+        </activity>
+
+        <activity
+            android:name=".Cal_list_MainActivity">
+        </activity>
+
+
+        <activity
+            android:name=".add_Activity">
+        </activity>
+
+        <receiver android:name=".Notification_Receiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
