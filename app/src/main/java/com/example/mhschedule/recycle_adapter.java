@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class recycle_adapter extends RecyclerView.Adapter<recycle_adapter.CustomViewHolder> {
 
     private ArrayList<recycle_data> arrayList;
+    private ScheduleRespository respository;
 
     public recycle_adapter(ArrayList<recycle_data> arrayList) {
         this.arrayList = arrayList;

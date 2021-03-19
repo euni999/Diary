@@ -42,6 +42,7 @@ import java.util.concurrent.Executors;
 
 
 public class Calendar_ extends Fragment {
+    static final String TAG = "Calendar_";
 
     String time,kcal,menu;
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
